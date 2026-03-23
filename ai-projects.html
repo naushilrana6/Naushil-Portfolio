@@ -8,8 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap');
 
         * {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
             scroll-behavior: smooth;
@@ -24,8 +23,7 @@
         /* --- Navbar --- */
         header {
             position: fixed;
-            top: 0;
-            width: 100%;
+            top: 0; width: 100%;
             padding: 15px 8%; 
             display: flex;
             justify-content: space-between;
@@ -54,7 +52,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 8px 18px; 
             border-radius: 50px;
-            transition: all 0.4s ease;
+            transition: 0.4s;
         }
 
         .nav-links a:hover {
@@ -63,7 +61,7 @@
             border-color: #ffcc00;
         }
 
-        /* --- Page Header --- */
+        /* --- Header with Video --- */
         .page-header {
             position: relative; 
             padding: 160px 8% 80px; 
@@ -77,10 +75,8 @@
 
         .header-video-bg {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
             transform: translate(-50%, -50%); 
             z-index: -2; 
             object-fit: cover;
@@ -98,12 +94,11 @@
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 4px;
-            margin-bottom: 10px;
         }
 
         .page-header h1 span { color: #ffcc00; }
 
-        /* --- Filter Section --- */
+        /* --- Video Grid Section --- */
         .gallery-section { padding: 60px 8%; }
 
         .filter-container {
@@ -133,7 +128,6 @@
             border-color: #ffcc00;
         }
 
-        /* --- Video Grid --- */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -146,6 +140,7 @@
             overflow: hidden;
             aspect-ratio: 16 / 9;
             cursor: pointer;
+            background: #111;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: 0.4s;
         }
@@ -153,84 +148,89 @@
         .video-card:hover {
             transform: translateY(-10px);
             border-color: #ffcc00;
-            box-shadow: 0 15px 30px rgba(255, 204, 0, 0.1);
         }
 
-        .video-card img { width: 100%; height: 100%; object-fit: cover; }
+        /* Essential for Loop: Iframe covers card */
+        .video-card iframe.loop-video {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 300%; height: 300%; /* Ensures full coverage */
+            transform: translate(-50%, -50%);
+            pointer-events: none; /* Clicking passes to the card */
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .video-card.active-loop iframe.loop-video {
+            opacity: 0.8; /* Subtle visibility for the loop */
+        }
+
+        .video-card img.thumb {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+            transition: opacity 0.5s;
+        }
+
+        /* Hide thumb when loop is playing in All Work */
+        .video-card.active-loop:hover img.thumb {
+            opacity: 0;
+        }
 
         .play-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.2);
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 2;
         }
 
         .play-btn {
-            width: 60px; height: 60px;
+            width: 50px; height: 50px;
             background: rgba(255, 204, 0, 0.9);
             border-radius: 50%;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 0.3s ease;
+            justify-content: center; align-items: center;
+            transition: 0.3s;
         }
 
-        .video-card:hover .play-btn {
-            transform: scale(1.1);
-            background: #ffcc00;
-        }
+        .video-card:hover .play-btn { transform: scale(1.1); background: #ffcc00; }
 
         .play-btn::after {
             content: '';
-            border-left: 15px solid #000;
+            border-left: 14px solid #000;
             border-top: 10px solid transparent;
             border-bottom: 10px solid transparent;
-            margin-left: 5px;
+            margin-left: 4px;
         }
 
-        /* --- CINEMATIC VIDEO MODAL --- */
+        /* --- Modal Popup --- */
         .modal {
             display: none;
             position: fixed;
-            z-index: 99999;
+            z-index: 10000;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
+            background: rgba(0,0,0,0.98);
             backdrop-filter: blur(15px);
-            justify-content: center;
-            align-items: center;
+            justify-content: center; align-items: center;
         }
 
         .modal-content {
-            width: 90%;
-            max-width: 1000px;
+            width: 90%; max-width: 1000px;
             aspect-ratio: 16 / 9;
             position: relative;
-            background: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
         }
 
         .close-modal {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 35px;
-            cursor: pointer;
-            z-index: 100000;
-            background: rgba(255,255,255,0.1);
-            width: 50px; height: 50px;
-            border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            transition: 0.3s;
+            top: -60px; right: 0;
+            color: #fff; font-size: 35px; cursor: pointer;
         }
 
-        .close-modal:hover { background: #ffcc00; color: #000; }
-
-        iframe { width: 100%; height: 100%; border: none; }
+        #playerArea iframe { width: 100%; height: 100%; border-radius: 12px; border: none; }
 
         /* --- Footer --- */
         footer {
@@ -241,9 +241,9 @@
             margin-top: 40px;
         }
 
-        .contact-info h3 { font-size: 1.4rem; margin-bottom: 15px; color: #ffcc00; text-transform: uppercase; font-weight: 900; letter-spacing: 2px; }
-        .contact-info p { color: #888; font-size: 0.95rem; margin-bottom: 8px; font-weight: 400; }
-        .copyright { color: #444; font-size: 0.75rem; margin-top: 40px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+        .contact-info h3 { font-size: 1.4rem; color: #ffcc00; text-transform: uppercase; font-weight: 900; letter-spacing: 2px; margin-bottom: 15px; }
+        .contact-info p { color: #888; font-size: 0.95rem; margin-bottom: 8px; }
+        .copyright { color: #444; font-size: 0.75rem; margin-top: 40px; text-transform: uppercase; letter-spacing: 2px; }
 
     </style>
 </head>
@@ -272,56 +272,66 @@
         </div>
 
         <div class="video-grid">
-            <div class="video-card" data-cat="pixar" onclick="playVid('sUzKtCQvmPM')">
-                <img src="https://img.youtube.com/vi/sUzKtCQvmPM/maxresdefault.jpg">
+            <div class="video-card active-loop" data-cat="pixar" onclick="playVid('sUzKtCQvmPM')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/sUzKtCQvmPM?autoplay=1&mute=1&loop=1&playlist=sUzKtCQvmPM&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/sUzKtCQvmPM/maxresdefault.jpg">
                 <div class="play-overlay"><div class="play-btn"></div></div>
             </div>
-            <div class="video-card" data-cat="pixar" onclick="playVid('gATZMg0J-Y8')">
-                <img src="https://img.youtube.com/vi/gATZMg0J-Y8/maxresdefault.jpg">
+            <div class="video-card active-loop" data-cat="pixar" onclick="playVid('gATZMg0J-Y8')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/gATZMg0J-Y8?autoplay=1&mute=1&loop=1&playlist=gATZMg0J-Y8&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/gATZMg0J-Y8/maxresdefault.jpg">
                 <div class="play-overlay"><div class="play-btn"></div></div>
             </div>
-            <div class="video-card" data-cat="pixar" onclick="playVid('W_YumM7xZ3w')">
-                <img src="https://img.youtube.com/vi/W_YumM7xZ3w/maxresdefault.jpg">
-                <div class="play-overlay"><div class="play-btn"></div></div>
-            </div>
-
-            <div class="video-card" data-cat="ai-story" onclick="playVid('d-sHPyBUiGs')">
-                <img src="https://img.youtube.com/vi/d-sHPyBUiGs/maxresdefault.jpg">
-                <div class="play-overlay"><div class="play-btn"></div></div>
-            </div>
-            <div class="video-card" data-cat="ai-story" onclick="playVid('ssgSvZowTHE')">
-                <img src="https://img.youtube.com/vi/ssgSvZowTHE/maxresdefault.jpg">
-                <div class="play-overlay"><div class="play-btn"></div></div>
-            </div>
-            <div class="video-card" data-cat="ai-story" onclick="playVid('fjWhfd-oSAQ')">
-                <img src="https://img.youtube.com/vi/fjWhfd-oSAQ/maxresdefault.jpg">
+            <div class="video-card active-loop" data-cat="pixar" onclick="playVid('W_YumM7xZ3w')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/W_YumM7xZ3w?autoplay=1&mute=1&loop=1&playlist=W_YumM7xZ3w&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/W_YumM7xZ3w/maxresdefault.jpg">
                 <div class="play-overlay"><div class="play-btn"></div></div>
             </div>
 
-            <div class="video-card" data-cat="cinematic" onclick="playVid('ETQn0WHTWfE')">
-                <img src="https://img.youtube.com/vi/ETQn0WHTWfE/maxresdefault.jpg">
+            <div class="video-card active-loop" data-cat="ai-story" onclick="playVid('d-sHPyBUiGs')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/d-sHPyBUiGs?autoplay=1&mute=1&loop=1&playlist=d-sHPyBUiGs&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/d-sHPyBUiGs/maxresdefault.jpg">
                 <div class="play-overlay"><div class="play-btn"></div></div>
             </div>
-            <div class="video-card" data-cat="cinematic" onclick="playVid('-QOwOB7KJ7Q')">
-                <img src="https://img.youtube.com/vi/-QOwOB7KJ7Q/maxresdefault.jpg">
+            <div class="video-card active-loop" data-cat="ai-story" onclick="playVid('ssgSvZowTHE')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/ssgSvZowTHE?autoplay=1&mute=1&loop=1&playlist=ssgSvZowTHE&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/ssgSvZowTHE/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card active-loop" data-cat="ai-story" onclick="playVid('fjWhfd-oSAQ')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/fjWhfd-oSAQ?autoplay=1&mute=1&loop=1&playlist=fjWhfd-oSAQ&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/fjWhfd-oSAQ/maxresdefault.jpg">
                 <div class="play-overlay"><div class="play-btn"></div></div>
             </div>
 
-            <div class="video-card" data-cat="ai-ads" onclick="playVid('muB2CzAc3KM')">
-                <img src="https://img.youtube.com/vi/muB2CzAc3KM/maxresdefault.jpg">
+            <div class="video-card active-loop" data-cat="cinematic" onclick="playVid('ETQn0WHTWfE')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/ETQn0WHTWfE?autoplay=1&mute=1&loop=1&playlist=ETQn0WHTWfE&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/ETQn0WHTWfE/maxresdefault.jpg">
                 <div class="play-overlay"><div class="play-btn"></div></div>
             </div>
-            <div class="video-card" data-cat="ai-ads" onclick="playVid('NkvZEXRzyLQ')">
-                <img src="https://img.youtube.com/vi/NkvZEXRzyLQ/maxresdefault.jpg">
+            <div class="video-card active-loop" data-cat="cinematic" onclick="playVid('-QOwOB7KJ7Q')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/-QOwOB7KJ7Q?autoplay=1&mute=1&loop=1&playlist=-QOwOB7KJ7Q&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/-QOwOB7KJ7Q/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+
+            <div class="video-card active-loop" data-cat="ai-ads" onclick="playVid('muB2CzAc3KM')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/muB2CzAc3KM?autoplay=1&mute=1&loop=1&playlist=muB2CzAc3KM&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/muB2CzAc3KM/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card active-loop" data-cat="ai-ads" onclick="playVid('NkvZEXRzyLQ')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/NkvZEXRzyLQ?autoplay=1&mute=1&loop=1&playlist=NkvZEXRzyLQ&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/NkvZEXRzyLQ/maxresdefault.jpg">
                 <div class="play-overlay"><div class="play-btn"></div></div>
             </div>
         </div>
     </section>
 
     <div class="modal" id="vModal">
-        <div class="close-modal" onclick="closeVid()">&times;</div>
         <div class="modal-content">
-            <div id="playerArea" style="height: 100%;"></div>
+            <span class="close-modal" onclick="closeVid()">&times; Close</span>
+            <div id="playerArea" style="height:100%"></div>
         </div>
     </div>
 
@@ -335,35 +345,37 @@
     </footer>
 
     <script>
-        // Modal logic with Embed conversion
         function playVid(id) {
-            const modal = document.getElementById('vModal');
-            const playerArea = document.getElementById('playerArea');
-            modal.style.display = 'flex';
-            // Proper embed link to avoid Error 153
-            playerArea.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            document.getElementById('vModal').style.display = 'flex';
+            document.getElementById('playerArea').innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
             document.body.style.overflow = 'hidden';
         }
-
         function closeVid() {
             document.getElementById('vModal').style.display = 'none';
             document.getElementById('playerArea').innerHTML = '';
             document.body.style.overflow = 'auto';
         }
-
         window.onclick = function(e) { if(e.target == document.getElementById('vModal')) closeVid(); }
 
-        // Filter Logic
         const btns = document.querySelectorAll('.filter-btn');
         const cards = document.querySelectorAll('.video-card');
+
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
                 btns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 const f = btn.getAttribute('data-filter');
+
                 cards.forEach(c => {
-                    if(f === 'all' || c.getAttribute('data-cat') === f) c.style.display = 'block';
-                    else c.style.display = 'none';
+                    if(f === 'all' || c.getAttribute('data-cat') === f) {
+                        c.style.display = 'block';
+                        // Sirf "All" filter par hi loop active rakhenge system ki tarah
+                        if(f === 'all') c.classList.add('active-loop');
+                        else c.classList.remove('active-loop');
+                    } else {
+                        c.style.display = 'none';
+                        c.classList.remove('active-loop');
+                    }
                 });
             });
         });

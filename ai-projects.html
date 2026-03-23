@@ -1,1 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Projects | Naushil Rana</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap');
 
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #050505; 
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* --- Navbar --- */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 15px 8%; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 15px; 
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 11px; 
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 18px; 
+            border-radius: 50px;
+            transition: 0.4s;
+        }
+
+        .nav-links a:hover {
+            background-color: #ffcc00;
+            color: #000;
+            border-color: #ffcc00;
+        }
+
+        /* --- Header Section --- */
+        .page-header {
+            position: relative; 
+            padding: 160px 8% 80px; 
+            text-align: center;
+            overflow: hidden; 
+            min-height: 450px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-video-bg {
+            position: absolute;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            transform: translate(-50%, -50%); 
+            z-index: -2; 
+            object-fit: cover;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); 
+            z-index: -1;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .page-header h1 span { color: #ffcc00; }
+
+        .page-header p {
+            font-size: 1rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* --- Video Grid Section --- */
+        .gallery-section { padding: 60px 8%; }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #ffcc00;
+            color: #000;
+            border-color: #ffcc00;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .video-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            cursor: pointer;
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.4s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffcc00;
+        }
+
+        /* Video Loop Styling */
+        .video-card iframe.loop-video {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 300%; height: 300%; 
+            transform: translate(-50%, -50%);
+            pointer-events: none; 
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .video-card.active-loop iframe.loop-video {
+            opacity: 0.8; 
+        }
+
+        .video-card img.thumb {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+            transition: opacity 0.5s;
+        }
+
+        .video-card.active-loop:hover img.thumb {
+            opacity: 0;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .play-btn {
+            width: 50px; height: 50px;
+            background: rgba(255, 204, 0, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center; align-items: center;
+            transition: 0.3s;
+        }
+
+        .video-card:hover .play-btn { transform: scale(1.1); background: #ffcc00; }
+
+        .play-btn::after {
+            content: '';
+            border-left: 14px solid #000;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 4px;
+        }
+
+        /* --- BULLETPROOF MODAL PLAYER --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 99999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98);
+            backdrop-filter: blur(20px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            width: 90%;
+            max-width: 1000px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+        }
+
+        .close-modal {
+            position: relative;
+            color: #000;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            background: #ffcc00; 
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
+        }
+
+        .close-modal:hover { background: #fff; transform: translateY(-3px); }
+
+        #playerArea {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #playerArea iframe { width: 100%; height: 100%; border: none; }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #020202;
+            padding: 60px 8% 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+        }
+
+        .contact-info h3 { font-size: 1.4rem; color: #ffcc00; text-transform: uppercase; font-weight: 900; letter-spacing: 2px; margin-bottom: 15px; }
+        .contact-info p { color: #888; font-size: 0.95rem; margin-bottom: 8px; }
+        .copyright { color: #444; font-size: 0.75rem; margin-top: 40px; text-transform: uppercase; letter-spacing: 2px; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Naushil Rana</a>
+        <div class="nav-links"><a href="index.html">Main Home</a></div>
+    </header>
+
+    <section class="page-header">
+        <video class="header-video-bg" autoplay loop muted playsinline>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+        <div class="header-overlay"></div>
+        <h1>AI <span>Content</span></h1>
+        <p>A collection of premium visual creations. Scroll to explore.</p>
+    </section>
+
+    <section class="gallery-section">
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All Works</button>
+            <button class="filter-btn" data-filter="pixar">Pixar Animation</button>
+            <button class="filter-btn" data-filter="ai-story">Ai Storys</button>
+            <button class="filter-btn" data-filter="cinematic">Cinematic Movies</button>
+            <button class="filter-btn" data-filter="ai-ads">Ai ads</button>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-card active-loop" data-cat="pixar" onclick="playVid('sUzKtCQvmPM')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/sUzKtCQvmPM?autoplay=1&mute=1&loop=1&playlist=sUzKtCQvmPM&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/sUzKtCQvmPM/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card active-loop" data-cat="pixar" onclick="playVid('gATZMg0J-Y8')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/gATZMg0J-Y8?autoplay=1&mute=1&loop=1&playlist=gATZMg0J-Y8&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/gATZMg0J-Y8/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card active-loop" data-cat="pixar" onclick="playVid('W_YumM7xZ3w')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/W_YumM7xZ3w?autoplay=1&mute=1&loop=1&playlist=W_YumM7xZ3w&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/W_YumM7xZ3w/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+
+            <div class="video-card active-loop" data-cat="ai-story" onclick="playVid('d-sHPyBUiGs')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/d-sHPyBUiGs?autoplay=1&mute=1&loop=1&playlist=d-sHPyBUiGs&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/d-sHPyBUiGs/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card active-loop" data-cat="ai-story" onclick="playVid('ssgSvZowTHE')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/ssgSvZowTHE?autoplay=1&mute=1&loop=1&playlist=ssgSvZowTHE&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/ssgSvZowTHE/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card active-loop" data-cat="ai-story" onclick="playVid('fjWhfd-oSAQ')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/fjWhfd-oSAQ?autoplay=1&mute=1&loop=1&playlist=fjWhfd-oSAQ&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/fjWhfd-oSAQ/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+
+            <div class="video-card active-loop" data-cat="cinematic" onclick="playVid('ETQn0WHTWfE')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/ETQn0WHTWfE?autoplay=1&mute=1&loop=1&playlist=ETQn0WHTWfE&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/ETQn0WHTWfE/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card active-loop" data-cat="cinematic" onclick="playVid('-QOwOB7KJ7Q')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/-QOwOB7KJ7Q?autoplay=1&mute=1&loop=1&playlist=-QOwOB7KJ7Q&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/-QOwOB7KJ7Q/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+
+            <div class="video-card active-loop" data-cat="ai-ads" onclick="playVid('muB2CzAc3KM')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/muB2CzAc3KM?autoplay=1&mute=1&loop=1&playlist=muB2CzAc3KM&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/muB2CzAc3KM/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card active-loop" data-cat="ai-ads" onclick="playVid('NkvZEXRzyLQ')">
+                <iframe class="loop-video" src="https://www.youtube.com/embed/NkvZEXRzyLQ?autoplay=1&mute=1&loop=1&playlist=NkvZEXRzyLQ&controls=0&showinfo=0"></iframe>
+                <img class="thumb" src="https://img.youtube.com/vi/NkvZEXRzyLQ/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="vModal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeVid()">
+                &times; Close Project
+            </div>
+            <div id="playerArea"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contact-info">
+            <h3>Let's Work Together</h3>
+            <p>Email: naushilrana6@gmail.com</p>
+            <p>Location: Surat, Gujarat, India</p>
+        </div>
+        <div class="copyright">Copyright &copy; 2026 Naushil Rana. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        function playVid(id) {
+            document.getElementById('vModal').style.display = 'flex';
+            document.getElementById('playerArea').innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            document.body.style.overflow = 'hidden';
+        }
+        function closeVid() {
+            document.getElementById('vModal').style.display = 'none';
+            document.getElementById('playerArea').innerHTML = '';
+            document.body.style.overflow = 'auto';
+        }
+        window.onclick = function(e) { if(e.target == document.getElementById('vModal')) closeVid(); }
+
+        const btns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.video-card');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const f = btn.getAttribute('data-filter');
+
+                cards.forEach(c => {
+                    if(f === 'all' || c.getAttribute('data-cat') === f) {
+                        c.style.display = 'block';
+                        if(f === 'all') c.classList.add('active-loop');
+                        else c.classList.remove('active-loop');
+                    } else {
+                        c.style.display = 'none';
+                        c.classList.remove('active-loop');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

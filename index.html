@@ -81,7 +81,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6); /* Dark overlay for text readability */
+            background: rgba(0, 0, 0, 0.6); 
             z-index: -1;
         }
 
@@ -118,11 +118,11 @@
         }
 
         .btn:hover {
-            background-color: #ffcc00; /* Yellow accent like the reference site */
+            background-color: #ffcc00; 
             transform: scale(1.05);
         }
 
-        /* --- Scrolling Marquee (Tools & Software) --- */
+        /* --- Scrolling Marquee --- */
         .marquee-container {
             background: #111;
             padding: 20px 0;
@@ -151,7 +151,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* --- Services/Projects Section --- */
+        /* --- Expertise Section --- */
         .services {
             padding: 100px 5%;
             background-color: #050505;
@@ -175,63 +175,72 @@
 
         .service-card {
             background: #111;
-            height: 350px;
+            height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             color: #fff;
-            font-size: 2rem;
-            font-weight: 800;
+            font-size: 2.2rem;
+            font-weight: 900;
             text-transform: uppercase;
             position: relative;
             overflow: hidden;
             border: 1px solid #222;
-            transition: all 0.4s ease;
+            border-radius: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .service-card span {
-            z-index: 2;
-            transition: transform 0.3s ease;
-        }
-
-        .service-card:hover {
-            border-color: #ffcc00;
-        }
-
-        .service-card:hover span {
-            transform: scale(1.1);
-            color: #ffcc00;
-        }
-
-        /* Hover Overlay Background */
-        .service-card::after {
-            content: "";
+        /* PREMIUM IMAGE BACKGROUND CSS */
+        .service-card .card-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 204, 0, 0.1);
-            opacity: 0;
-            transition: opacity 0.4s ease;
+            object-fit: cover;
+            opacity: 0.5; 
+            transition: all 0.6s ease;
             z-index: 1;
         }
 
-        .service-card:hover::after {
-            opacity: 1;
+        .service-card span {
+            z-index: 3;
+            position: relative;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            transition: all 0.4s ease;
         }
 
-        /* --- Footer Section --- */
+        .service-card:hover {
+            border-color: #ffcc00;
+            box-shadow: 0 15px 35px rgba(255, 204, 0, 0.2);
+        }
+
+        .service-card:hover .card-bg {
+            opacity: 0.9;
+            transform: scale(1.1);
+        }
+
+        .service-card:hover span {
+            color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+        /* Overlay gradient for contrast */
+        .service-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            z-index: 2;
+        }
+
+        /* --- Footer --- */
         footer {
             background-color: #050505;
             padding: 60px 5% 30px;
             text-align: center;
             border-top: 1px solid #222;
-        }
-
-        .contact-info {
-            margin-bottom: 30px;
         }
 
         .contact-info h3 {
@@ -249,15 +258,8 @@
             font-weight: 600;
         }
 
-        .contact-info a {
-            color: #fff;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-info a:hover {
-            color: #ffcc00;
-        }
+        .contact-info a { color: #fff; text-decoration: none; transition: 0.3s; }
+        .contact-info a:hover { color: #ffcc00; }
 
         .copyright {
             color: #444;
@@ -268,11 +270,10 @@
             font-weight: 600;
         }
 
-        /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .hero-content h1 { font-size: 3rem; }
             .nav-links { display: none; }
-            .contact-info h3 { font-size: 1.5rem; }
+            .service-card { height: 300px; font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -317,7 +318,6 @@
             <span class="marquee-item">ChatGPT</span>
             <span class="marquee-item">•</span>
             <span class="marquee-item">Freepik</span>
-            <span class="marquee-item">•</span>
             <span class="marquee-item">Photoshop</span>
             <span class="marquee-item">•</span>
             <span class="marquee-item">After Effects</span>
@@ -341,12 +341,14 @@
         <div class="grid-container">
             
             <a href="graphic-projects.html" target="_blank" class="service-card">
+                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1000&auto=format&fit=crop" alt="Graphic Design Showcase" class="card-bg">
                 <span>Graphic Design</span>
             </a>
 
-           <a href="ai-projects.html" target="_blank" class="service-card">
-    <span>AI Content</span>
-</a>
+            <a href="ai-projects.html" target="_blank" class="service-card">
+                <img src="https://images.unsplash.com/photo-1675271591211-126ad94e495d?q=80&w=1000&auto=format&fit=crop" alt="AI Content Showcase" class="card-bg">
+                <span>AI Content</span>
+            </a>
 
         </div>
     </section>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Projects | Naushil Rana</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #050505; 
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* --- Sleeker Glassmorphism Navbar --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 8%; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 15px; 
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 11px; 
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 18px; 
+            border-radius: 50px;
+            transition: all 0.4s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #ffcc00;
+            color: #000;
+            border-color: #ffcc00;
+        }
+
+        /* --- Cinematic Header with Video Background --- */
+        .page-header {
+            position: relative; 
+            padding: 160px 8% 80px; 
+            text-align: center;
+            overflow: hidden; 
+            min-height: 450px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%); 
+            z-index: -2; 
+            object-fit: cover;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4); 
+            z-index: -1;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .page-header h1 span { color: #ffcc00; }
+
+        .page-header p {
+            font-size: 1rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        /* --- Video Gallery Section --- */
+        .gallery-section { padding: 60px 8%; }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #ffcc00;
+            color: #000;
+            border-color: #ffcc00;
+        }
+
+        /* Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .video-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.4s;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            border-color: #ffcc00;
+        }
+
+        .video-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 204, 0, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
+        }
+
+        .play-btn::after {
+            content: '';
+            border-left: 15px solid #000;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            margin-left: 5px;
+        }
+
+        /* --- Video Modal --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-controls {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            z-index: 10001;
+        }
+
+        .close-control {
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.6); 
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 204, 0, 0.4);
+            border-radius: 50%;
+            width: 50px; height: 50px;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.3s;
+        }
+
+        .close-control:hover { background: #ffcc00; color: #000; }
+
+        .modal-content {
+            width: 90%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
+            position: relative;
+        }
+
+        iframe { width: 100%; height: 100%; border-radius: 12px; border: none; }
+
+        /* --- RE-ADDED PREMIUM FOOTER --- */
+        footer {
+            background-color: #020202;
+            padding: 60px 8% 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 40px;
+        }
+
+        .contact-info h3 { 
+            font-size: 1.4rem; 
+            margin-bottom: 15px; 
+            color: #ffcc00; 
+            text-transform: uppercase; 
+            font-weight: 900; 
+            letter-spacing: 2px; 
+        }
+
+        .contact-info p { 
+            color: #888; 
+            font-size: 0.95rem; 
+            margin-bottom: 8px; 
+            font-weight: 400; 
+        }
+
+        .copyright { 
+            color: #444; 
+            font-size: 0.75rem; 
+            margin-top: 40px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            font-weight: 600; 
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2.5rem; }
+            header { padding: 15px 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Naushil Rana</a>
+        <div class="nav-links"><a href="index.html">Main Home</a></div>
+    </header>
+
+    <section class="page-header">
+        <video class="header-video-bg" autoplay loop muted playsinline>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+        <div class="header-overlay"></div>
+        <h1>AI <span>Content</span></h1>
+        <p>A collection of premium visual creations. Scroll to explore.</p>
+    </section>
+
+    <section class="gallery-section">
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All Works</button>
+            <button class="filter-btn" data-filter="pixar">Pixar Animation</button>
+            <button class="filter-btn" data-filter="ai-story">Ai Storys</button>
+            <button class="filter-btn" data-filter="cinematic">Cinematic Movies</button>
+            <button class="filter-btn" data-filter="ai-ads">Ai ads</button>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-card" data-cat="pixar" onclick="playVid('sUzKtCQvmPM')">
+                <img src="https://img.youtube.com/vi/sUzKtCQvmPM/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card" data-cat="pixar" onclick="playVid('gATZMg0J-Y8')">
+                <img src="https://img.youtube.com/vi/gATZMg0J-Y8/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card" data-cat="pixar" onclick="playVid('W_YumM7xZ3w')">
+                <img src="https://img.youtube.com/vi/W_YumM7xZ3w/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+
+            <div class="video-card" data-cat="ai-story" onclick="playVid('d-sHPyBUiGs')">
+                <img src="https://img.youtube.com/vi/d-sHPyBUiGs/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card" data-cat="ai-story" onclick="playVid('ssgSvZowTHE')">
+                <img src="https://img.youtube.com/vi/ssgSvZowTHE/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card" data-cat="ai-story" onclick="playVid('fjWhfd-oSAQ')">
+                <img src="https://img.youtube.com/vi/fjWhfd-oSAQ/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+
+            <div class="video-card" data-cat="cinematic" onclick="playVid('ETQn0WHTWfE')">
+                <img src="https://img.youtube.com/vi/ETQn0WHTWfE/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card" data-cat="cinematic" onclick="playVid('-QOwOB7KJ7Q')">
+                <img src="https://img.youtube.com/vi/-QOwOB7KJ7Q/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+
+            <div class="video-card" data-cat="ai-ads" onclick="playVid('muB2CzAc3KM')">
+                <img src="https://img.youtube.com/vi/muB2CzAc3KM/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+            <div class="video-card" data-cat="ai-ads" onclick="playVid('NkvZEXRzyLQ')">
+                <img src="https://img.youtube.com/vi/NkvZEXRzyLQ/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="vModal">
+        <div class="modal-controls">
+            <div class="close-control" onclick="closeVid()">&times;</div>
+        </div>
+        <div class="modal-content">
+            <div id="playerArea"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contact-info">
+            <h3>Let's Work Together</h3>
+            <p>Email: naushilrana6@gmail.com</p>
+            <p>Location: Surat, Gujarat, India</p>
+        </div>
+        <div class="copyright">
+            Copyright &copy; 2026 Naushil Rana. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        function playVid(id) {
+            document.getElementById('vModal').style.display = 'flex';
+            document.getElementById('playerArea').innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allowfullscreen allow="autoplay"></iframe>`;
+            document.body.style.overflow = 'hidden';
+        }
+        function closeVid() {
+            document.getElementById('vModal').style.display = 'none';
+            document.getElementById('playerArea').innerHTML = '';
+            document.body.style.overflow = 'auto';
+        }
+        window.onclick = function(e) { if(e.target == document.getElementById('vModal')) closeVid(); }
+
+        const btns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.video-card');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const f = btn.getAttribute('data-filter');
+                cards.forEach(c => {
+                    if(f === 'all' || c.getAttribute('data-cat') === f) c.style.display = 'block';
+                    else c.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

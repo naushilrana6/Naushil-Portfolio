@@ -21,7 +21,7 @@
             overflow-x: hidden;
         }
 
-        /* --- Sleeker Glassmorphism Navbar --- */
+        /* --- Navbar --- */
         header {
             position: fixed;
             top: 0;
@@ -63,7 +63,7 @@
             border-color: #ffcc00;
         }
 
-        /* --- Cinematic Header with Video Background --- */
+        /* --- Page Header --- */
         .page-header {
             position: relative; 
             padding: 160px 8% 80px; 
@@ -103,15 +103,7 @@
 
         .page-header h1 span { color: #ffcc00; }
 
-        .page-header p {
-            font-size: 1rem;
-            color: #ccc;
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 400;
-        }
-
-        /* --- Video Gallery Section --- */
+        /* --- Filter Section --- */
         .gallery-section { padding: 60px 8%; }
 
         .filter-container {
@@ -141,7 +133,7 @@
             border-color: #ffcc00;
         }
 
-        /* Grid */
+        /* --- Video Grid --- */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -161,13 +153,10 @@
         .video-card:hover {
             transform: translateY(-10px);
             border-color: #ffcc00;
+            box-shadow: 0 15px 30px rgba(255, 204, 0, 0.1);
         }
 
-        .video-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .video-card img { width: 100%; height: 100%; object-fit: cover; }
 
         .play-overlay {
             position: absolute;
@@ -176,18 +165,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: 0.3s;
         }
 
         .play-btn {
-            width: 60px;
-            height: 60px;
+            width: 60px; height: 60px;
             background: rgba(255, 204, 0, 0.9);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
+            transition: 0.3s ease;
+        }
+
+        .video-card:hover .play-btn {
+            transform: scale(1.1);
+            background: #ffcc00;
         }
 
         .play-btn::after {
@@ -198,50 +190,49 @@
             margin-left: 5px;
         }
 
-        /* --- Video Modal --- */
+        /* --- CINEMATIC VIDEO MODAL --- */
         .modal {
             display: none;
             position: fixed;
-            z-index: 10000;
+            z-index: 99999;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             justify-content: center;
             align-items: center;
         }
 
-        .modal-controls {
+        .modal-content {
+            width: 90%;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            background: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+        }
+
+        .close-modal {
             position: absolute;
             top: 20px;
             right: 30px;
-            z-index: 10001;
-        }
-
-        .close-control {
             color: #fff;
-            font-size: 30px;
+            font-size: 35px;
             cursor: pointer;
-            background: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 204, 0, 0.4);
-            border-radius: 50%;
+            z-index: 100000;
+            background: rgba(255,255,255,0.1);
             width: 50px; height: 50px;
+            border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             transition: 0.3s;
         }
 
-        .close-control:hover { background: #ffcc00; color: #000; }
+        .close-modal:hover { background: #ffcc00; color: #000; }
 
-        .modal-content {
-            width: 90%;
-            max-width: 900px;
-            aspect-ratio: 16 / 9;
-            position: relative;
-        }
+        iframe { width: 100%; height: 100%; border: none; }
 
-        iframe { width: 100%; height: 100%; border-radius: 12px; border: none; }
-
-        /* --- RE-ADDED PREMIUM FOOTER --- */
+        /* --- Footer --- */
         footer {
             background-color: #020202;
             padding: 60px 8% 30px;
@@ -250,35 +241,10 @@
             margin-top: 40px;
         }
 
-        .contact-info h3 { 
-            font-size: 1.4rem; 
-            margin-bottom: 15px; 
-            color: #ffcc00; 
-            text-transform: uppercase; 
-            font-weight: 900; 
-            letter-spacing: 2px; 
-        }
+        .contact-info h3 { font-size: 1.4rem; margin-bottom: 15px; color: #ffcc00; text-transform: uppercase; font-weight: 900; letter-spacing: 2px; }
+        .contact-info p { color: #888; font-size: 0.95rem; margin-bottom: 8px; font-weight: 400; }
+        .copyright { color: #444; font-size: 0.75rem; margin-top: 40px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
 
-        .contact-info p { 
-            color: #888; 
-            font-size: 0.95rem; 
-            margin-bottom: 8px; 
-            font-weight: 400; 
-        }
-
-        .copyright { 
-            color: #444; 
-            font-size: 0.75rem; 
-            margin-top: 40px; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            font-weight: 600; 
-        }
-
-        @media (max-width: 768px) {
-            .page-header h1 { font-size: 2.5rem; }
-            header { padding: 15px 5%; }
-        }
     </style>
 </head>
 <body>
@@ -294,7 +260,6 @@
         </video>
         <div class="header-overlay"></div>
         <h1>AI <span>Content</span></h1>
-        <p>A collection of premium visual creations. Scroll to explore.</p>
     </section>
 
     <section class="gallery-section">
@@ -354,11 +319,9 @@
     </section>
 
     <div class="modal" id="vModal">
-        <div class="modal-controls">
-            <div class="close-control" onclick="closeVid()">&times;</div>
-        </div>
+        <div class="close-modal" onclick="closeVid()">&times;</div>
         <div class="modal-content">
-            <div id="playerArea"></div>
+            <div id="playerArea" style="height: 100%;"></div>
         </div>
     </div>
 
@@ -368,24 +331,29 @@
             <p>Email: naushilrana6@gmail.com</p>
             <p>Location: Surat, Gujarat, India</p>
         </div>
-        <div class="copyright">
-            Copyright &copy; 2026 Naushil Rana. All Rights Reserved.
-        </div>
+        <div class="copyright">Copyright &copy; 2026 Naushil Rana. All Rights Reserved.</div>
     </footer>
 
     <script>
+        // Modal logic with Embed conversion
         function playVid(id) {
-            document.getElementById('vModal').style.display = 'flex';
-            document.getElementById('playerArea').innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" allowfullscreen allow="autoplay"></iframe>`;
+            const modal = document.getElementById('vModal');
+            const playerArea = document.getElementById('playerArea');
+            modal.style.display = 'flex';
+            // Proper embed link to avoid Error 153
+            playerArea.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
             document.body.style.overflow = 'hidden';
         }
+
         function closeVid() {
             document.getElementById('vModal').style.display = 'none';
             document.getElementById('playerArea').innerHTML = '';
             document.body.style.overflow = 'auto';
         }
+
         window.onclick = function(e) { if(e.target == document.getElementById('vModal')) closeVid(); }
 
+        // Filter Logic
         const btns = document.querySelectorAll('.filter-btn');
         const cards = document.querySelectorAll('.video-card');
         btns.forEach(btn => {

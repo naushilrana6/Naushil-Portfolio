@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Edits | Naushil Rana</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap');
+
+        * {
+            margin: 0; padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #050505; 
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* --- Compact Navbar --- */
+        header {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 10px 8%; /* Reduced padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.7);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 13px; /* Smaller logo font */
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 10px; /* Smaller link font */
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 15px; /* Smaller button */
+            border-radius: 50px;
+            transition: 0.4s;
+        }
+
+        .nav-links a:hover {
+            background-color: #ffcc00;
+            color: #000;
+            border-color: #ffcc00;
+        }
+
+        /* --- Header Section with Animation --- */
+        .page-header {
+            position: relative; 
+            padding: 120px 8% 60px; 
+            text-align: center;
+            overflow: hidden; 
+            min-height: 400px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header-video-bg {
+            position: absolute;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            transform: translate(-50%, -50%); 
+            z-index: -2; 
+            object-fit: cover;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: -1;
+        }
+
+        .page-header h1 {
+            font-size: 3rem; 
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+        }
+
+        .page-header h1 span { color: #ffcc00; }
+
+        /* --- Category & Video Grid --- */
+        .gallery-section { padding: 40px 8% 80px; }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .category-label {
+            background: #ffcc00;
+            color: #000;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .video-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 9 / 16; 
+            cursor: pointer;
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.4s;
+        }
+
+        .video-card:hover { transform: translateY(-8px); border-color: #ffcc00; }
+
+        .video-card img.thumb { width: 100%; height: 100%; object-fit: cover; }
+
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .play-btn {
+            width: 45px; height: 45px;
+            background: rgba(255, 204, 0, 0.9);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .play-btn::after {
+            content: '';
+            border-left: 12px solid #000;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            margin-left: 3px;
+        }
+
+        /* --- Modal --- */
+        .modal {
+            display: none;
+            position: fixed; z-index: 99999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98);
+            backdrop-filter: blur(20px);
+            justify-content: center; align-items: center;
+        }
+
+        .modal-content {
+            width: 90%; max-width: 380px;
+            display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+        }
+
+        .close-modal {
+            color: #000; font-size: 12px; font-weight: 700;
+            cursor: pointer; background: #ffcc00; 
+            padding: 8px 18px; border-radius: 50px; text-transform: uppercase;
+        }
+
+        #playerArea {
+            width: 100%; aspect-ratio: 9 / 16;
+            background: #000; border-radius: 15px; overflow: hidden;
+        }
+
+        #playerArea iframe { width: 100%; height: 100%; border: none; }
+
+        /* --- Footer with Let's Work Together --- */
+        footer {
+            background-color: #020202;
+            padding: 60px 8% 30px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .contact-info h3 { 
+            font-size: 1.2rem; 
+            color: #ffcc00; 
+            text-transform: uppercase; 
+            font-weight: 900; 
+            letter-spacing: 2px; 
+            margin-bottom: 15px; 
+        }
+
+        .contact-info p { color: #888; font-size: 0.9rem; margin-bottom: 8px; }
+
+        .copyright { 
+            color: #444; 
+            font-size: 0.7rem; 
+            margin-top: 40px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">Naushil Rana</a>
+        <div class="nav-links"><a href="index.html">Main Home</a></div>
+    </header>
+
+    <section class="page-header">
+        <video class="header-video-bg" autoplay loop muted playsinline>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+        <div class="header-overlay"></div>
+        <h1>Video <span>Edit</span></h1>
+        <p>Premium vertical content and high-impact storytelling.</p>
+    </section>
+
+    <section class="gallery-section">
+        <div class="filter-container">
+            <div class="category-label">Shorts Edits</div>
+        </div>
+
+        <div class="video-grid">
+            <div class="video-card" onclick="playVid('UfyDXUTgbfA')">
+                <img class="thumb" src="https://img.youtube.com/vi/UfyDXUTgbfA/maxresdefault.jpg">
+                <div class="play-overlay"><div class="play-btn"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="vModal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeVid()">&times; Close Project</div>
+            <div id="playerArea"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="contact-info">
+            <h3>Let's Work Together</h3>
+            <p>Email: naushilrana6@gmail.com</p>
+            <p>Location: Surat, Gujarat, India</p>
+        </div>
+        <div class="copyright">Copyright &copy; 2026 Naushil Rana. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        function playVid(id) {
+            document.getElementById('vModal').style.display = 'flex';
+            document.getElementById('playerArea').innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+            document.body.style.overflow = 'hidden';
+        }
+        function closeVid() {
+            document.getElementById('vModal').style.display = 'none';
+            document.getElementById('playerArea').innerHTML = '';
+            document.body.style.overflow = 'auto';
+        }
+        window.onclick = function(e) { if(e.target == document.getElementById('vModal')) closeVid(); }
+    </script>
+</body>
+</html>

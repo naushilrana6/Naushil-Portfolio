@@ -218,6 +218,50 @@
 
         .grid-item:hover .overlay-text span { transform: translateY(0); }
 
+        /* --- PREMIUM CLIENT WORK SECTION (NEW) --- */
+        .client-work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 10px 8% 40px 8%;
+        }
+
+        .client-item {
+            height: 350px;
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 15px rgba(255, 204, 0, 0.05);
+            border: 1px solid rgba(255, 204, 0, 0.15);
+            /* Resetting the flex behavior since this is a CSS grid */
+            flex: unset; 
+        }
+
+        .client-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .client-item:hover {
+            border-color: #ffcc00;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 25px rgba(255, 204, 0, 0.25);
+        }
+
+        .client-heading {
+            text-align: center;
+            border-left: none !important;
+            margin-left: 0 !important;
+            padding-left: 0 !important;
+            font-size: 2.2rem !important;
+            margin-bottom: 50px !important;
+            justify-content: center;
+        }
+        
+        .client-heading span {
+            color: #ffcc00;
+            margin-left: 10px;
+        }
+
         /* --- BULLETPROOF MODAL --- */
         .modal {
             display: none; 
@@ -321,6 +365,8 @@
             .slider-container { padding: 10px 5% 30px 5%; gap: 15px; }
             .grid-item { height: 280px; } 
             .grid-item.logo-card { height: 180px; } 
+            .client-work-grid { grid-template-columns: 1fr; padding: 10px 5% 30px 5%; }
+            .client-heading { font-size: 1.8rem !important; }
             .modal-controls { top: 15px; right: 15px; gap: 10px;}
             .control-btn { width: 45px; height: 45px; font-size: 22px; }
         }
@@ -460,6 +506,53 @@
                 <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/92a11b9eb31f0f3d551de227d3a66eef227f93fb/a1%20(1).png" alt="AI Generated Concept 2">
                 <div class="overlay-text"><span>View AI Concept ➔</span></div>
             </div>
+        </div>
+    </section>
+
+    <section class="gallery-section client-work-section">
+        <h2 class="gallery-section h2 client-heading">Client's <span>Work</span></h2>
+        <div class="client-work-grid">
+            
+            <div class="grid-item client-item" onclick="openModal('https://raw.githubusercontent.com/naushilrana6/portfolio-images/e9692e0f842842ac422981632e0253a824ea171f/2%20version.jpg.jpeg')">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/e9692e0f842842ac422981632e0253a824ea171f/2%20version.jpg.jpeg" alt="Client Work 1">
+                <div class="overlay-text"><span>View Work ➔</span></div>
+            </div>
+
+            <div class="grid-item client-item" onclick="openModal('https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/3.jpg')">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/3.jpg" alt="Client Work 2">
+                <div class="overlay-text"><span>View Work ➔</span></div>
+            </div>
+
+            <div class="grid-item client-item" onclick="openModal('https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/EARTH%20DAY%20V2.jpg')">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/EARTH%20DAY%20V2.jpg" alt="Client Work 3">
+                <div class="overlay-text"><span>View Work ➔</span></div>
+            </div>
+
+            <div class="grid-item client-item" onclick="openModal('https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/EARTH%20DAY.jpg')">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/EARTH%20DAY.jpg" alt="Client Work 4">
+                <div class="overlay-text"><span>View Work ➔</span></div>
+            </div>
+
+            <div class="grid-item client-item" onclick="openModal('https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/P1.jpg')">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/P1.jpg" alt="Client Work 5">
+                <div class="overlay-text"><span>View Work ➔</span></div>
+            </div>
+
+            <div class="grid-item client-item" onclick="openModal('https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/P2.jpg')">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/P2.jpg" alt="Client Work 6">
+                <div class="overlay-text"><span>View Work ➔</span></div>
+            </div>
+
+            <div class="grid-item client-item" onclick="openModal('https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/P3.jpg')">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/P3.jpg" alt="Client Work 7">
+                <div class="overlay-text"><span>View Work ➔</span></div>
+            </div>
+
+            <div class="grid-item client-item" onclick="openModal('https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/1.jpg')">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/462ad2560d7b202d24f514f085354dc752211e3a/1.jpg" alt="Client Work 8">
+                <div class="overlay-text"><span>View Work ➔</span></div>
+            </div>
+
         </div>
     </section>
 

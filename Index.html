@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naushil Rana | Creative Professional</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
+
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-main: #0a0a0a;
+            --bg-secondary: #111111;
+            --bg-tertiary: #1a1a1a;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent: #00ffcc;
+            --border-color: #222222;
+            --nav-bg: rgba(10, 10, 10, 0.95);
+            --shadow: rgba(0, 255, 204, 0.2);
+            --btn-text: #000000;
+        }
+
+        .light-mode {
+            --bg-main: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e9ecef;
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
+            --accent: #00997a; 
+            --border-color: #dddddd;
+            --nav-bg: rgba(255, 255, 255, 0.95);
+            --shadow: rgba(0, 0, 0, 0.1);
+            --btn-text: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; }
+
+        /* --- 🌟 SHARED LOGO ANIMATION STYLE --- */
+        .logo-animate {
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--text-main), var(--accent), var(--text-main));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shineEffect 4s linear infinite;
+        }
+        .dot-blink { 
+            color: var(--accent); 
+            display: inline-block; 
+            animation: dotBreathing 2s ease-in-out infinite; 
+        }
+
+        @keyframes shineEffect { to { background-position: 200% center; } }
+        @keyframes dotBreathing { 0%, 100% { opacity: 1; transform: scale(1); text-shadow: 0 0 10px var(--accent); } 50% { opacity: 0.3; transform: scale(0.8); } }
+
+        /* Navbar */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: var(--nav-bg); position: fixed; width: 100%; z-index: 1000; backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
+        .nav-logo { font-size: 26px; display: flex; align-items: center; }
+        .nav-links-container { display: flex; align-items: center; gap: 30px; }
+        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav ul li a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: 0.3s; font-size: 15px; }
+        nav ul li a:hover { color: var(--accent); }
+        .theme-switch { background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 120px 8% 50px; background: radial-gradient(circle at center, var(--bg-tertiary) 0%, var(--bg-main) 100%); }
+        .hero-content { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; gap: 50px; }
+        .hero-text { flex: 1; text-align: left; }
+        .hero-text h3 { color: var(--accent); font-size: 1.5rem; font-weight: 500; margin-bottom: 10px; letter-spacing: 2px; text-transform: uppercase; }
+        .hero-text h2 { font-size: 4.5rem; margin-bottom: 20px; line-height: 1.1; font-weight: 800; }
+        .bio { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 35px; line-height: 1.8; max-width: 600px; }
+        .hero-buttons { display: flex; gap: 20px; }
+        .hero-image img { width: 400px; height: 400px; object-fit: cover; border-radius: 50%; border: 4px solid var(--accent); box-shadow: 0 0 30px var(--shadow); transition: transform 0.5s ease; cursor: pointer; }
+        .hero-image:hover img { transform: translateY(-10px) scale(1.02); }
+
+        .btn { padding: 15px 35px; background: var(--accent); color: var(--btn-text); text-decoration: none; font-weight: 600; border-radius: 8px; transition: 0.4s; font-size: 16px; border: 2px solid var(--accent); cursor: pointer; display: inline-block; text-align: center; }
+        .btn:hover { background: transparent; color: var(--accent); transform: translateY(-3px); }
+        .btn-outline { background: transparent; color: var(--accent); }
+
+        /* Work UI */
+        section { padding: 100px 8%; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--text-main); font-weight: 800; }
+        .section-title span { color: var(--accent); }
+        
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: stretch; }
+        
+        .project-card { 
+            background: var(--bg-secondary); 
+            border-radius: 15px; 
+            overflow: hidden; 
+            border: 1px solid var(--border-color); 
+            color: var(--text-main); 
+            transition: 0.4s; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100%; 
+        }
+        .project-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 30px var(--shadow); }
+        .project-card img { width: 100%; height: 250px; object-fit: cover; flex-shrink: 0; }
+        .project-info { padding: 25px; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; }
+        .project-info h3 { font-size: 1.4rem; margin-bottom: 10px; word-break: break-word; }
+        .project-info p { font-size: 1rem; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; hyphens: auto; }
+
+        /* Premium Contact Section */
+        .premium-contact-container { display: grid; grid-template-columns: 1fr 1.3fr; gap: 60px; align-items: center; max-width: 1100px; margin: 0 auto; }
+        
+        .contact-left { display: flex; flex-direction: column; gap: 25px; }
+        
+        .contact-left-text { margin-bottom: 10px; }
+        .contact-left-text h3 { font-size: 2.8rem; margin-bottom: 10px; background: linear-gradient(to right, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .contact-left-text p { color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; }
+        
+        .contact-cards-wrapper { display: flex; flex-direction: column; gap: 20px; }
+
+        .contact-glass-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(20px); padding: 20px 25px; border-radius: 20px; transition: all 0.4s ease; cursor: pointer; display: flex; align-items: center; gap: 20px; overflow: hidden; width: 100%; box-sizing: border-box; }
+        .contact-glass-card:hover { transform: translateY(-5px); border-color: var(--accent); background: rgba(255, 255, 255, 0.06); box-shadow: 0 15px 35px rgba(0, 255, 204, 0.1); }
+        .contact-icon { font-size: 26px; background: var(--accent); color: #000; min-width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 15px; box-shadow: 0 0 15px var(--shadow); }
+        .wa-icon { background: #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.3); color: #fff; }
+        .contact-details h4 { font-size: 1.1rem; margin-bottom: 3px; font-weight: 600; color: var(--text-main); }
+        .contact-details p { color: var(--accent); font-size: 0.9rem; font-weight: 500; word-break: break-all; } 
+
+        .premium-form { background: var(--bg-secondary); padding: 40px; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 20px; }
+        .light-mode .premium-form { box-shadow: 0 20px 60px rgba(0,0,0,0.05); }
+
+        .input-box { width: 100%; }
+        .input-box label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; margin-bottom: 8px; display: block; transition: color 0.3s; }
+        .input-box:focus-within label { color: var(--accent); }
+        
+        .input-box input, .input-box textarea { width: 100%; padding: 16px; background: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-main); font-size: 1rem; outline: none; transition: all 0.3s ease; box-sizing: border-box; }
+        .input-box textarea { resize: vertical; min-height: 120px; }
+        .input-box input:focus, .input-box textarea:focus { background: var(--bg-secondary); border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0, 255, 204, 0.1); }
+        .input-box input::placeholder, .input-box textarea::placeholder { color: #666; }
+
+        .submit-btn-premium { width: 100%; padding: 18px; background: var(--accent); color: #000; border: none; border-radius: 12px; font-weight: 700; font-size: 1.05rem; cursor: pointer; letter-spacing: 1px; transition: all 0.3s ease; margin-top: 10px; }
+        .submit-btn-premium:hover { background: #00e6b8; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 255, 204, 0.3); }
+
+        /* Modal */
+        .image-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(5, 5, 5, 0.98); backdrop-filter: blur(10px); opacity: 0; transition: opacity 0.3s ease; }
+        .modal-content-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .modal-content-img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px; cursor: grab; transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1); }
+        .close-btn { position: absolute; top: 30px; right: 40px; color: #fff; background: rgba(20, 20, 20, 0.8); border-radius: 50%; width: 45px; height: 45px; font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10000; }
+        .zoom-controls { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; background: rgba(20, 20, 20, 0.8); padding: 8px 15px; border-radius: 30px; border: 1px solid #333; z-index: 10000; }
+        .zoom-btn { background: transparent; color: #fff; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 20px; cursor: pointer; }
+
+        footer { padding: 80px 8% 40px; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-tertiary); }
+
+        /* =========================================
+           📱 PERFECT PROPORTION MOBILE UI (FIXED)
+        ========================================= */
+
+        @media (max-width: 990px) {
+            .hero-text h2 { font-size: 3.5rem; }
+            .hero-image img { width: 320px; height: 320px; }
+            .premium-contact-container { grid-template-columns: 1fr; gap: 50px; }
+        }
+
+        @media (max-width: 768px) {
+            /* Compact Navbar */
+            nav { padding: 15px 5%; display: flex; flex-direction: row; justify-content: space-between; }
+            .nav-logo { font-size: 20px; }
+            .nav-links-container { flex-direction: row; gap: 15px; }
+            nav ul { display: flex; flex-direction: row; gap: 15px; }
+            nav ul li a { font-size: 13px; }
+
+            /* Compact Horizontal Hero */
+            .hero { padding: 100px 5% 40px; }
+            .hero-content { flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; text-align: left; }
+            .hero-text { flex: 1; min-width: 200px; }
+            .hero-text h3 { font-size: 1.2rem; margin-bottom: 5px; }
+            .hero-text h2 { font-size: 2.2rem; margin-bottom: 10px; line-height: 1.2; }
+            .bio { font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; }
+            
+            .hero-image { flex-shrink: 0; }
+            .hero-image img { width: 140px; height: 140px; border-width: 3px; }
+            
+            .hero-buttons { flex-direction: row; gap: 10px; flex-wrap: wrap; }
+            .btn { padding: 10px 20px; font-size: 14px; width: auto; }
+
+            /* 🌟 WORK SECTION: Convert to PC-like Clean Grid (Stacked on mobile) - UNTOUCHED 🌟 */
+            .section-title { font-size: 2rem; margin-bottom: 30px; }
+            section { padding: 60px 5%; overflow: hidden; } 
+            
+            .portfolio-grid { 
+                display: grid; /* No flex/horizontal scroll, use Grid */
+                grid-template-columns: 1fr; /* Single column stack for clean PC adaptability */
+                gap: 20px; /* PC-like spacing */
+                padding: 0; 
+                overflow-x: hidden; /* Stops horizontal shift */
+            }
+            .portfolio-grid::-webkit-scrollbar { display: none; }
+            
+            .project-card { 
+                flex: none; /* Kill flex props for grid */
+                width: 100%; /* 👉 THE FIX: Cards are full width, no cutoff */
+                max-width: none; 
+                scroll-snap-align: none; /* No snapping needed in vertical stack */
+                height: auto;
+                margin-bottom: 10px; /* Spacing between stacked cards */
+            }
+            .project-card img { height: 180px; width: 100%; } 
+            
+            .project-info { padding: 20px; display: flex; flex-direction: column; }
+            .project-info h3 { font-size: 1.25rem; margin-bottom: 8px; } /* Proportional smaller Text */
+            .project-info p { font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; } /* Word Wrapping is fine now with full width */
+
+            /* 🌟 CONTACT SECTION: EXACT ALIGNMENT FIX 🌟 */
+            .premium-contact-container { display: flex; flex-direction: column; gap: 30px; padding: 0 5%; }
+            .contact-left { align-items: center; text-align: center; width: 100%; }
+            .contact-left-text h3 { font-size: 2rem; margin-bottom: 5px; }
+            .contact-left-text p { font-size: 0.95rem; margin-bottom: 20px; }
+            
+            .contact-cards-wrapper { 
+                display: flex; 
+                flex-direction: column; /* Stacked vertically exactly like your screenshot */
+                gap: 15px; 
+                width: 100%;
+                align-items: center; /* Centers the cards */
+            }
+            .contact-glass-card { 
+                padding: 15px 25px; 
+                flex-direction: row; /* Icon on Left, Text on Right */
+                justify-content: flex-start; /* Align content inside to the left */
+                text-align: left;
+                gap: 20px;
+                border-radius: 16px;
+                width: 100%; 
+                max-width: 350px; /* Prevents it from stretching too weirdly */
+                box-sizing: border-box;
+                margin: 0;
+            }
+            .contact-icon { 
+                margin: 0; 
+                width: 48px; 
+                height: 48px; 
+                min-width: 48px; 
+                font-size: 22px; 
+                border-radius: 12px; 
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .contact-details {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            .contact-details h4 { font-size: 1.1rem; margin-bottom: 2px !important; }
+            .contact-details p { font-size: 0.85rem; margin-bottom: 0 !important; word-break: break-all; }
+
+            .premium-form { padding: 30px 20px; border-radius: 20px; width: 100%; box-sizing: border-box; }
+            .input-box input, .input-box textarea { padding: 14px; font-size: 0.95rem; }
+            .submit-btn-premium { padding: 16px; font-size: 1rem; }
+            
+            footer { padding: 40px 5% 20px; }
+        }
+
+        /* Very Small Phones */
+        @media (max-width: 420px) {
+            .hero-content { gap: 10px; }
+            .hero-image img { width: 110px; height: 110px; }
+            .hero-text h2 { font-size: 1.8rem; }
+            .bio { font-size: 0.85rem; }
+            
+            nav { padding: 15px 5%; }
+            .nav-logo { font-size: 18px; }
+            nav ul { gap: 10px; }
+            nav ul li a { font-size: 11px; }
+
+            .project-card { margin-bottom: 10px; } 
+            .project-card img { height: 150px; }
+            .project-info h3 { font-size: 1.15rem; }
+            .project-info p { font-size: 0.9rem; }
+            
+            .contact-glass-card { padding: 15px 20px; max-width: 100%; }
+            .contact-icon { width: 42px; min-width: 42px; height: 42px; font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">
+            <span class="logo-animate">Naushil</span><span class="dot-blink">.</span>
+        </div>
+        <div class="nav-links-container">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#portfolio">Work</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-switch" id="themeToggle">☀️</button>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h3>Hello, I'm</h3>
+                <h2>Naushil Rana</h2>
+                <p class="bio">I am a passionate Graphic Designer, Video Editor, and AI Prompt Engineer. I specialize in transforming raw ideas into visually stunning realities.</p>
+                <div class="hero-buttons">
+                    <a href="#portfolio" class="btn">View My Work</a>
+                    <a href="#contact" class="btn btn-outline">Hire Me</a>
+                </div>
+            </div>
+            <div class="hero-image" onclick="openModal(this)">
+                <img src="https://raw.githubusercontent.com/naushilrana6/portfolio-images/d5b7b272bf87aceb10d94356e008a0d4474d735d/profile.jpeg" alt="Profile">
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2 class="section-title">My <span>Work Categories</span></h2>
+        
+        <div class="portfolio-grid">
+            <a href="graphic.html" target="_blank" style="text-decoration: none; display: block;">
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop" alt="Graphic">
+                    <div class="project-info">
+                        <h3>🎨 Graphic Design</h3>
+                        <p>Posters, brochures, and brand identity.</p>
+                    </div>
+                </div>
+            </a>
+            <a style="text-decoration: none; display: block;">
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800" alt="Video">
+                    <div class="project-info">
+                        <h3>🎬 Video Editing</h3>
+                        <p>High-retention reels and seamless transitions.</p>
+                    </div>
+                </div>
+            </a>
+           <a href="ai-art.html" target="_blank" style="text-decoration: none; display: block;">
+                <div class="project-card">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800" alt="AI art">
+                    <div class="project-info">
+                        <h3>🤖 AI art</h3>
+                        <p>Utilizing advanced A
